@@ -15,7 +15,45 @@ cd lookup-service
 npm install --production
 ```
 
-## Usage
-
 1. Create a config file `config/<env>.json`, which partially overrides `config/default.json`.
 2. `export NODE_ENV=<env>; node index.js`
+
+## API
+
+You can lookup an address using the e-mail it has been verified with.
+
+```http
+GET /?email=jannis@ethcore.io
+```
+
+Or use the address directly.
+
+```http
+GET /?address=0x0044f8f0851b544134f88a47f20acc7cf64e7442
+```
+
+The result will look like this.
+
+```js
+{
+  "address": "0x0044f8f0851b544134f88a47f20acc7cf64e7442",
+  "badges": [
+    {
+      "id": 0,
+      "address": "0x01e1a37118fe3befd17c426fa962cff2c9099835",
+      "name": "smsverification",
+      "title": "sms verified"
+    }
+    // …
+  ],
+  "tokens": [
+    {
+      "TLA": "ETH",
+      "name": "Ether",
+      "base": "1000000000000000000",
+      "balance": "4.860101308978890726"
+    }
+    // …
+  ]
+}
+```
