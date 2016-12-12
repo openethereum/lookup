@@ -5,6 +5,7 @@
     "key": "./self-signed.key.pem"
   },
   "badgeRegAddress": "<BadgeReg.sol address>",
+  "tokenRegAddress": "<TokenReg.sol address>",
   "parity": {
     "host": "localhost:8545"
   }
