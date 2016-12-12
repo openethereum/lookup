@@ -1,0 +1,10 @@
+{
+  "http": {
+    "port": 8000,
+    "cert": "./self-signed.cert.pem",
+    "key": "./self-signed.key.pem"
+  },
+  "parity": {
+    "host": "localhost:8545"
+  }
+}

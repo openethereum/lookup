@@ -1,0 +1,36 @@
+{
+  "private": true,
+  "name": "lookup-service",
+  "version": "0.1.0",
+  "description": "address lookup service for Parity.",
+  "main": "index.js",
+  "scripts": {
+    "lint": "standard",
+    "prepush": "npm run lint"
+  },
+  "keywords": [],
+  "author": "Ethcore Team <admin@ethcore.io>",
+  "maintainers": [
+    "Jannis R <mail@jannisr.de>"
+  ],
+  "license": "GPL-3.0",
+  "repository": "ethcore/lookup-service",
+  "engine": {
+    "node": ">=6"
+  },
+  "dependencies": {
+    "boom": "^4.2.0",
+    "co-express": "^1.2.2",
+    "config": "^1.24.0",
+    "corser": "^2.0.1",
+    "express": "^4.14.0",
+    "hsts": "^2.0.0",
+    "nocache": "^2.0.0",
+    "spdy": "^3.4.4",
+    "web3": "^0.17.0-beta"
+  },
+  "devDependencies": {
+    "husky": "^0.11.9",
+    "standard": "^8.6.0"
+  }
+}

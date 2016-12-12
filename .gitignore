@@ -1,0 +1,8 @@
+.DS_STORE
+thumbs.db
+
+node_modules
+npm-debug.log
+
+config/*
+!config/default.json
