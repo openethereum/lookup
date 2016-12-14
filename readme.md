@@ -1,5 +1,9 @@
 # [Parity](https://ethcore.io/parity.html) lookup service
 
+**The service is deployed at `https://id.parity.io/` (mainnet) and `https://id.parity.io:8443/` (testnet).**
+
+Also, check out [lookup-service-ui](https://github.com/ethcore/lookup-service-ui) for a GUI.
+
 [![Join the chat at https://gitter.im/ethcore/parity][gitter-image]][gitter-url] [![GPLv3][license-image]][license-url]
 
 [gitter-image]: https://badges.gitter.im/Join%20Chat.svg
@@ -42,7 +46,8 @@ The result will look like this.
       "id": 0,
       "address": "0x01e1a37118fe3befd17c426fa962cff2c9099835",
       "name": "smsverification",
-      "title": "sms verified"
+      "title": "sms verified",
+      "img": "https://raw.githubusercontent.com/ethcore/dapp-assets/1b1beb5/certifications/sms-verification.svg"
     }
     // …
   ],
@@ -51,6 +56,7 @@ The result will look like this.
       "TLA": "ETH",
       "name": "Ether",
       "base": "1000000000000000000",
+      "img": "https://raw.githubusercontent.com/ethcore/parity/1e6a2cb/js/assets/images/contracts/ethereum-black-64x64.png",
       "balance": "4.860101308978890726"
     }
     // …
