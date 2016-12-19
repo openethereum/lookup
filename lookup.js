@@ -20,7 +20,7 @@ module.exports = co(function* (req, res) {
     try {
       data.address = yield addressByEmailHash(emailHash)
     } catch (err) {
-      console.error(err)
+      if (err.isBoom) throw err
       throw boom.internal('An error occured while querying Parity.')
     }
   } else if (req.query.address) {
@@ -34,14 +34,14 @@ module.exports = co(function* (req, res) {
   try {
     data.badges = yield badgesOfAddress(data.address)
   } catch (err) {
-    console.error(err)
+    if (err.isBoom) throw err
     throw boom.internal('An error occured while querying Parity.')
   }
 
   try {
     data.tokens = yield tokenBalancesOfAddress(data.address)
   } catch (err) {
-    console.error(err)
+    if (err.isBoom) throw err
     throw boom.internal('An error occured while querying Parity.')
   }
 
