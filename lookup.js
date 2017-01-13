@@ -41,6 +41,8 @@ module.exports = co(function* (req, res) {
     throw boom.badRequest('Missing e-mail, name or address parameter.')
   }
 
+  if (!data.address) throw boom.notFound('Could not find this account.')
+
   if (!data.name) {
     try {
       data.name = yield nameOfAddress(data.address)
