@@ -6,6 +6,7 @@ const sha3 = require('web3/lib/utils/sha3')
 const {isValidAddress} = require('./lib/util')
 
 const addressByEmailHash = require('./lib/address-by-email-hash')
+const nameOfAddress = require('./lib/name-of-address')
 const badgesOfAddress = require('./lib/badges-of-address')
 const tokenBalancesOfAddress = require('./lib/token-balances-of-address')
 
@@ -28,6 +29,12 @@ module.exports = co(function* (req, res) {
     data.address = address
   } else {
     throw boom.badRequest('Missing email or address parameter.')
+  }
+
+  try {
+    data.name = yield nameOfAddress(data.address)
+  } catch (err) {
+    throw boom.wrap(err, 500, 'An error occured while querying Parity')
   }
 
   try {
