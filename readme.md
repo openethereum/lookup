@@ -28,6 +28,7 @@ You can lookup an address using the e-mail it has been verified with.
 
 ```http
 GET /?email=jannis@ethcore.io
+GET /?emailHash=0xc39c668305a16c70e893541650fffc6504f45c94a1f7f8ebe21dc62f7462f9a9
 ```
 
 Use [`SimpleRegistry.sol`](https://github.com/ethcore/contracts/blob/c4f40b6/SimpleRegistry.sol) to find an address by name.
