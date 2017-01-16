@@ -41,7 +41,7 @@ module.exports = co(function* (req, res) {
     }
   } else if (req.query.address) {
     const address = req.query.address
-    if (typeof address !== 'string' || isValidAddress(address)) throw boom.badRequest('Address is invalid.')
+    if (typeof address !== 'string' || !isValidAddress(address)) throw boom.badRequest('Address is invalid.')
     data.address = address
   } else {
     throw boom.badRequest('Missing e-mail, name or address parameter.')
