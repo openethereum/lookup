@@ -22,6 +22,11 @@ const BADGEREG = {
   code: fs.readFileSync(path.join(__dirname, 'BadgeReg.bin')).toString('utf8'),
   address: '0x3333333333333333333333333333333333333333'
 }
+const OPRAHBADGE = {
+  abi: JSON.parse(fs.readFileSync(path.join(__dirname, 'OprahBadge.abi'))),
+  code: fs.readFileSync(path.join(__dirname, 'OprahBadge.bin')).toString('utf8'),
+  address: '0x4444444444444444444444444444444444444444'
+}
 
 const showError = (err) => {
   console.error(err)
@@ -29,19 +34,23 @@ const showError = (err) => {
 }
 
 const getOwner = (web3) => new Promise((resolve, reject) => {
-  web3.eth.getAccounts((err, [account]) => {
+  web3.eth.getAccounts((err, accounts) => {
     if (err) reject(err)
-    else if (!account) reject(new Error('no account'))
-    else resolve(account)
+    else resolve(accounts)
   })
 })
 
 so(function* () {
-  const owner = yield getOwner(web3)
-  console.info('owner', owner)
+  const [owner, user] = yield getOwner(web3)
+  console.info('owner', owner, 'user', user)
 
-  yield deploy(web3, REGISTRY.abi, REGISTRY.code, REGISTRY.address, [], {from: owner})
-  yield deploy(web3, TOKENREG.abi, TOKENREG.code, TOKENREG.address, [], {from: owner})
-  yield deploy(web3, BADGEREG.abi, BADGEREG.code, BADGEREG.address, [], {from: owner})
+  const registry = yield deploy(web3, REGISTRY.abi, REGISTRY.code, REGISTRY.address, [], {from: owner})
+  console.info('SimpleRegistry at', registry.address)
+  const tokenReg = yield deploy(web3, TOKENREG.abi, TOKENREG.code, TOKENREG.address, [], {from: owner})
+  console.info('TokenReg at', tokenReg.address)
+  const badgeReg = yield deploy(web3, BADGEREG.abi, BADGEREG.code, BADGEREG.address, [], {from: owner})
+  console.info('BadgeReg at', badgeReg.address)
+  const oprahBadge = yield deploy(web3, OPRAHBADGE.abi, OPRAHBADGE.code, OPRAHBADGE.address, [], {from: owner})
+  console.info('OprahBadge at', oprahBadge.address)
 })()
 .catch(showError)
