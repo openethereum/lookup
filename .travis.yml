@@ -7,5 +7,9 @@ node_js:
 cache:
   directories:
     - node_modules
+before_script:
+  - $SSH_KEY > .ssh-key
+  - ssh -i .ssh-key -N -L 8545:localhost:8545 root@212.47.231.185 &
+  - env NODE_ENV=e2e-test node index.js &
 script:
-  - npm run lint
+  - node run e2e-test
