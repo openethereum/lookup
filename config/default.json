@@ -7,6 +7,8 @@
   "registryAddress": "<Registry.sol address>",
   "badgeRegAddress": "<BadgeReg.sol address>",
   "tokenRegAddress": "<TokenReg.sol address>",
+  "emailVerificationId": "<BadgeReg.sol EmailVerification.sol address>",
+  "smsVerificationId": "<BadgeReg.sol SMSVerification.sol address>",
   "parity": {
     "host": "localhost:8545"
   }
