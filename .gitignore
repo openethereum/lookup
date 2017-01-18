@@ -6,3 +6,7 @@ npm-debug.log
 
 config/*
 !config/default.json
+
+test/*.sol
+test/*.abi
+test/*.bin
