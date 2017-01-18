@@ -34,20 +34,21 @@ GET /?emailHash=0xc39c668305a16c70e893541650fffc6504f45c94a1f7f8ebe21dc62f7462f9
 Use [`SimpleRegistry.sol`](https://github.com/ethcore/contracts/blob/c4f40b6/SimpleRegistry.sol) to find an address by name.
 
 ```http
-GET /?name=foobarbaz
+GET /?name=derhuerst
 ```
 
 Or use the address directly.
 
 ```http
-GET /?address=0x0044f8f0851b544134f88a47f20acc7cf64e7442
+GET /?address=0x00d189b71e5b42a88aa3e83173d4a6926e665336
 ```
 
 The result will look like this.
 
 ```js
 {
-  "address": "0x0044f8f0851b544134f88a47f20acc7cf64e7442",
+  "address": "0x00d189b71e5b42a88aa3e83173d4a6926e665336",
+  "name": "derhuerst",
   "badges": [
     {
       "id": 0,
@@ -55,7 +56,7 @@ The result will look like this.
       "name": "smsverification",
       "title": "sms verified",
       "img": "https://raw.githubusercontent.com/ethcore/dapp-assets/1b1beb5/certifications/sms-verification.svg"
-    }
+    },
     // …
   ],
   "tokens": [
@@ -64,8 +65,8 @@ The result will look like this.
       "name": "Ether",
       "base": "1000000000000000000",
       "img": "https://raw.githubusercontent.com/ethcore/parity/1e6a2cb/js/assets/images/contracts/ethereum-black-64x64.png",
-      "balance": "4.860101308978890726"
-    }
+      "balance": "987.264418979418313684"
+    },
     // …
   ]
 }
