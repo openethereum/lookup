@@ -7,6 +7,8 @@ node_js:
 cache:
   directories:
     - node_modules
+env:
+  - secure: E8YaLujj6md/Rm5WZqRzEwAMqtP0FRuumggZdNpJBYIExELuYuOGjTSJbEFb3ieETE/oaJZQbvatmvvkMatpcTuyB1pWor3Uv2SqmKCoyamhXmh7TZKeMvs4znMgLmdTo8dGyX9MOBl+sIq7nsTKPsxZOWkIDKg+ekSHc/4iaABNgift1vyZRcC2Mof65uVNsFwPShQPjOahJapm0Q3TbCQxcFfkE7GUd3dgxme8pBgyQJ0Xf3Ieba7mJsSbQPHUHQbZ7xml+bpuQw4oHQFLBp71F8u2XBN30t1e4XJiGHd+YwRlqpEP+SpLQBMedSOg1/86nojGMNtLME4X4dgwIFT3301Xs1V1Dh0B7zIVGK9ZvQVZRefzUQOnUPNhSgz2NVFA2pV7AVubJmJLnahgQVTvgeEY9FCkchqQCsT+FhPLdW3A4e5+LhVMsCzsgQMLLxosv9Fqw1lDUH3UHYy0de8ccbEY3hkheGYqM9Rs7c7Le8X+1DaP7SXjqKJIbgdTkmNj0JcqvMJDCVmEEheirfda70GJ7YZipKRqjD84TenI+2eefOePDXJkbluS5s3XsR0a3vhFftMDxzwv7cp0cRPSVjI43PX0lg7PnfG7jDTxGPmTR0VdN+xLeShuIHK4HysGmfO1zgx1C7+C3rDpLj2so0kSII1UeHHUvrelt04=
 before_script:
   - $SSH_KEY > .ssh-key
   - ssh -i .ssh-key -N -L 8545:localhost:8545 root@212.47.231.185 &

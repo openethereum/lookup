@@ -29,7 +29,7 @@
     "hsts": "^2.0.0",
     "nocache": "^2.0.0",
     "spdy": "^3.4.4",
-    "web3": "^0.18.0"
+    "web3": "derhuerst/web3.js#develop"
   },
   "devDependencies": {
     "got": "^6.7.1",
