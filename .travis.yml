@@ -12,4 +12,4 @@ env:
 before_script:
   - env NODE_ENV=e2e-test node index.js &
 script:
-  - node e2e-test
+  - npm run e2e-test
