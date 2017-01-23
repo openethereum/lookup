@@ -8,6 +8,8 @@ const config = require('config')
 const spdy = require('spdy')
 const fs = require('fs')
 
+const nodeIsSynced = require('./lib/node-is-synced')
+const nrOfPeers = require('./lib/nr-of-peers')
 const lookup = require('./lookup')
 
 const api = express()
@@ -18,6 +20,17 @@ api.use(hsts({maxAge: 3 * 24 * 60 * 60 * 1000})) // 3 days
 // CORS
 const allowed = corser.simpleRequestHeaders.concat(['User-Agent'])
 api.use(corser.create({requestHeaders: allowed}))
+
+api.get('/health', noCache, (req, res, next) => {
+  Promise.all([
+    nodeIsSynced(),
+    nrOfPeers()
+  ])
+  .catch(() => [false, 0])
+  .then(([isSynced, nrOfPeers]) => {
+    res.status(isSynced && nrOfPeers > 0 ? 200 : 500).end()
+  })
+})
 
 api.get('/', noCache, lookup)
 
