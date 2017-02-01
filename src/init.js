@@ -4,8 +4,8 @@ const ProofOfEmail = require('./contracts/proof-of-email')
 const Registry = require('./contracts/registry')
 const TokenReg = require('./contracts/token-reg')
 
-module.exports = function init (api) {
-  return Registry.init(api)
+module.exports = function init (api, config) {
+  return Registry.init(api, config || {})
     .then(() => {
       const promises = [
         BadgeReg.init(api),

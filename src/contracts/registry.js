@@ -1,15 +1,34 @@
 'use strict'
 
 const abi = require('./abi/SimpleRegistry.json')
-const registryAddress = '0x81a4b044831c4f12ba601adb9274516939e9b8a2'
 
+let address = ''
 let contract = null
 
-function init (api) {
-  if (!contract) {
+function getAddress (api, config) {
+  const {registryAddress} = config || {}
+
+  if (registryAddress) {
     return Promise.resolve(registryAddress)
-      .then((address) => {
-        contract = api.newContract(abi, address).instance
+  }
+
+  return api.parity
+    .registryAddress()
+    .then((fetchedAddress) => {
+      return fetchedAddress
+    })
+    .catch(() => address)
+}
+
+function init (api, config) {
+  const {registryAddress} = config || {}
+
+  if (!contract || (registryAddress && registryAddress !== address)) {
+    address = registryAddress || address
+
+    return getAddress(api, config)
+      .then((registryAddress) => {
+        contract = api.newContract(abi, registryAddress).instance
       })
   }
 
