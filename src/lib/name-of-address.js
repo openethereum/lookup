@@ -2,16 +2,17 @@
 
 const Registry = require('../contracts/registry')
 
-const nameOfAddress = (registry, address) =>
-  new Promise((resolve, reject) => {
-    registry.reverse(address, (err, name) => {
-      if (err) reject(err)
-      else if (!name) resolve(null)
-      else resolve(name)
+const nameOfAddress = (registry, address) => {
+  return registry.reverse
+    .call({}, [address])
+    .then((name) => {
+      return name || null
     })
-  })
+}
 
 module.exports = (api, address) => {
-  const registry = Registry.get(api)
-  return nameOfAddress(registry, address)
+  return Registry.get(api)
+    .then((registry) => {
+      return nameOfAddress(registry, address)
+    })
 }

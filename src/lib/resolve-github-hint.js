@@ -3,11 +3,16 @@
 const GithubHint = require('../contracts/github-hint')
 
 const resolveGitHubHint = (contract, hash) => {
-  const data = contract.entries(hash)
-  return data[0] || null
+  return contract.entries
+    .call({}, [ hash ])
+    .then((data) => {
+      return data[0] || null
+    })
 }
 
 module.exports = (api, hash) => {
-  const contract = GithubHint.get(api)
-  return resolveGitHubHint(contract, hash)
+  return GithubHint.get(api)
+    .then((contract) => {
+      return resolveGitHubHint(contract, hash)
+    })
 }

@@ -3,18 +3,31 @@
 const BadgeReg = require('./badge-reg')
 const abi = require('./abi/ProofOfEmail.json')
 
-let instance = null
+let contract = null
+
+function init (api) {
+  if (!contract) {
+    return BadgeReg.get(api)
+      .then((badgeReg) => {
+        return badgeReg.fromName.call({}, [ 'emailverification' ])
+      })
+      .then((addresses) => {
+        const address = addresses[1]
+        contract = api.newContract(abi, address).instance
+      })
+  }
+
+  return Promise.resolve()
+}
+
+function get (api) {
+  return init(api)
+    .then(() => {
+      return contract
+    })
+}
 
 module.exports = {
-  get: (api) => {
-    if (!instance || instance.api !== api) {
-      const badgeReg = BadgeReg.get(api)
-      const address = badgeReg.fromName.call('emailverification')[1]
-      const contract = api.eth.contract(abi).at(address)
-
-      instance = {api, contract}
-    }
-
-    return instance.contract
-  }
+  init,
+  get
 }

@@ -3,16 +3,21 @@
 const {zero20} = require('../util')
 const ProofOfEmail = require('../contracts/proof-of-email')
 
-const addressByEmailHash = (contract, emailHash) =>
-  new Promise((resolve, reject) => {
-    contract.reverse(emailHash, (err, address) => {
-      if (err) reject(err)
-      else if (address === zero20) resolve(null)
-      else resolve(address)
+const addressByEmailHash = (contract, emailHash) => {
+  return contract.reverse
+    .call({}, [ emailHash ])
+    .then((address) => {
+      if (address === zero20) {
+        return null
+      }
+
+      return address
     })
-  })
+}
 
 module.exports = (api, emailHash) => {
-  const contract = ProofOfEmail.get(api)
-  return addressByEmailHash(contract, emailHash)
+  return ProofOfEmail.get(api)
+    .then((contract) => {
+      return addressByEmailHash(contract, emailHash)
+    })
 }

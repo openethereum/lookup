@@ -7,12 +7,11 @@ const Tokens = require('./tokens')
 const tokenBalanceOfAddress = (address, token) => {
   const {contract} = token
 
-  return new Promise((resolve, reject) => {
-    contract.balanceOf(address, (err, balance) => {
-      if (err) reject(err)
-      else resolve(balance.dividedBy(token.base))
+  return contract.balanceOf
+    .call({}, [address])
+    .then((balance) => {
+      return balance.dividedBy(token.base)
     })
-  })
 }
 
 const ETH = {
@@ -22,12 +21,13 @@ const ETH = {
   img: 'https://raw.githubusercontent.com/ethcore/parity/1e6a2cb/js/assets/images/contracts/ethereum-black-64x64.png'
 }
 
-const ethOfAddress = (api, address) => new Promise((resolve, reject) => {
-  api.eth.getBalance(address, (err, balance) => {
-    if (err) reject(err)
-    else resolve(balance.dividedBy(ETH.base))
-  })
-})
+const ethOfAddress = (api, address) => {
+  return api.eth
+    .getBalance(address)
+    .then((balance) => {
+      return balance.dividedBy(ETH.base)
+    })
+}
 
 const tokenBalancesOfAddress = (api, allTokens, address) => {
   const tasks = allTokens
@@ -56,6 +56,8 @@ const tokenBalancesOfAddress = (api, allTokens, address) => {
 }
 
 module.exports = (api, address) => {
-  const allTokens = Tokens.all(api)
-  return tokenBalancesOfAddress(api, allTokens, address)
+  return Tokens.all(api)
+    .then((allTokens) => {
+      return tokenBalancesOfAddress(api, allTokens, address)
+    })
 }

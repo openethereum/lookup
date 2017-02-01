@@ -3,15 +3,27 @@
 const abi = require('./abi/SimpleRegistry.json')
 const registryAddress = '0x81a4b044831c4f12ba601adb9274516939e9b8a2'
 
-let instance = null
+let contract = null
+
+function init (api) {
+  if (!contract) {
+    return Promise.resolve(registryAddress)
+      .then((address) => {
+        contract = api.newContract(abi, address).instance
+      })
+  }
+
+  return Promise.resolve()
+}
+
+function get (api) {
+  return init(api)
+    .then(() => {
+      return contract
+    })
+}
 
 module.exports = {
-  get: (api) => {
-    if (!instance || instance.api !== api) {
-      const contract = api.eth.contract(abi).at(registryAddress)
-      instance = {api, contract}
-    }
-
-    return instance.contract
-  }
+  init,
+  get
 }

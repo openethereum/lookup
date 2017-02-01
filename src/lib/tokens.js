@@ -7,30 +7,58 @@ const {zero32} = require('../util')
 
 const abi = require('../contracts/abi/EIP20.json')
 
-let instance = null
+let tokens = null
+
+function fetchToken (api, tokenReg, id) {
+  return tokenReg.token
+    .call({}, [id])
+    .then(([address, TLA, base, name]) => {
+      const contract = api.newContract(abi, address).instance
+
+      return tokenReg.meta
+        .call({}, [id, 'IMG'])
+        .then((img) => img === zero32 ? null : resolveGitHubHint(api, img))
+        .then((img) => {
+          return {
+            id, address, contract, TLA, base, name, img
+          }
+        })
+    })
+}
+
+function init (api) {
+  if (!tokens) {
+    return TokenReg.get(api)
+      .then((tokenReg) => {
+        return tokenReg.tokenCount
+          .call({}, [])
+          .then((nrOfTokens) => {
+            const promises = []
+
+            for (let id = 0; id < nrOfTokens.toNumber(); id++) {
+              const promise = fetchToken(api, tokenReg, id)
+              promises.push(promise)
+            }
+
+            return Promise.all(promises)
+          })
+          .then((allTokens) => {
+            tokens = allTokens
+          })
+      })
+  }
+
+  return Promise.resolve()
+}
+
+function all (api) {
+  return init(api)
+    .then(() => {
+      return tokens
+    })
+}
 
 module.exports = {
-  all: (api) => {
-    if (!instance || instance.api !== api) {
-      const tokenReg = TokenReg.get(api)
-      const nrOfTokens = +tokenReg.tokenCount.call()
-      const allTokens = []
-
-      for (let id = 0; id < nrOfTokens; id++) {
-        const [address, TLA, base, name] = tokenReg.token.call(id)
-        const contract = api.eth.contract(abi).at(address)
-
-        let img = tokenReg.meta.call(id, 'IMG')
-        img = img === zero32 ? null : resolveGitHubHint(api, img)
-
-        allTokens.push({
-          id, address, contract, TLA, base, name, img
-        })
-      }
-
-      instance = {api, tokens: allTokens}
-    }
-
-    return instance.tokens
-  }
+  init,
+  all
 }
