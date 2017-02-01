@@ -22,7 +22,12 @@ const badgesOfAddress = (allBadges, address) =>
   .then((badges) =>
     badges
     .filter(({hasBadge}) => hasBadge)
-    .map(({badge}) => badge)
+    .map(({badge}) => {
+      const cleanBadge = Object.assign({}, badge);
+      delete cleanBadge.contract;
+
+      return cleanBadge
+    })
   )
 
 module.exports = (api, address) => {

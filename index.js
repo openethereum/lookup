@@ -20,18 +20,18 @@ function addressInfo (api, address) {
     })
 }
 
-function email (api, hash) {
-  return addressByEmailHash(api, name)
+function byEmail (api, hash) {
+  return addressByEmailHash(api, hash)
     .then((address) => {
       if (!isValidAddress(address)) {
         return null
       }
 
-      return address(api, address)
+      return byAddress(api, address)
     })
 }
 
-function name (api, name) {
+function byName (api, name) {
   return addressByName(api, name)
     .then((address) => {
       if (!isValidAddress(address)) {
@@ -45,7 +45,7 @@ function name (api, name) {
     })
 }
 
-function address (api, address) {
+function byAddress (api, address) {
   return nameOfAddress(api, address)
     .then((name) => {
       return addressInfo(api, address)
@@ -56,5 +56,5 @@ function address (api, address) {
 }
 
 module.exports = {
-  email, name, address
+  byEmail, byName, byAddress
 }

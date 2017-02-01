@@ -30,15 +30,22 @@ const ethOfAddress = (api, address) => new Promise((resolve, reject) => {
 })
 
 const tokenBalancesOfAddress = (api, allTokens, address) => {
-  const tasks = allTokens.map((token) =>
-    tokenBalanceOfAddress(address, token)
-    .catch(() => new BigNumber(0)) // in case of an error we assume address has 0
-    .then((balance) => Object.assign({}, token, {balance}))
-  ).concat(
-    ethOfAddress(api, address)
-    .catch(() => new BigNumber(0)) // in case of an error we assume address has 0
-    .then((balance) => Object.assign({}, ETH, {balance}))
-  )
+  const tasks = allTokens
+    .map((token) => {
+      return tokenBalanceOfAddress(address, token)
+        .catch(() => new BigNumber(0)) // in case of an error we assume address has 0
+        .then((balance) => {
+          const tok = Object.assign({}, token);
+          delete tok.contract;
+
+          return Object.assign({}, tok, {balance})
+        })
+    })
+    .concat(
+      ethOfAddress(api, address)
+        .catch(() => new BigNumber(0)) // in case of an error we assume address has 0
+        .then((balance) => Object.assign({}, ETH, {balance}))
+    )
 
   return Promise.all(tasks)
     .then((tokens) => {
