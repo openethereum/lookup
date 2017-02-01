@@ -1,3 +1,5 @@
+'use strict'
+
 const BadgeReg = require('./contracts/badge-reg')
 const GithubHint = require('./contracts/github-hint')
 const ProofOfEmail = require('./contracts/proof-of-email')
