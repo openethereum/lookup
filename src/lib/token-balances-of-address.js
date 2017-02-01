@@ -41,14 +41,14 @@ const tokenBalancesOfAddress = (api, allTokens, address) => {
   )
 
   return Promise.all(tasks)
-  .then((tokens) =>
-    tokens
-    .filter(({balance}) => balance.gt(0))
-    .map((token) => Object.assign({}, token, {balance: token.balance.toJSON()}))
-  )
+    .then((tokens) => {
+      return tokens
+        .filter(({balance}) => balance.gt(0))
+        .map((token) => Object.assign({}, token, {balance: token.balance.toJSON()}))
+    })
 }
 
 module.exports = (api, address) => {
-  const allTokens = Tokens.all()
-  tokenBalancesOfAddress(api, allTokens, address)
+  const allTokens = Tokens.all(api)
+  return tokenBalancesOfAddress(api, allTokens, address)
 }

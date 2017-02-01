@@ -7,7 +7,7 @@ const Lookup = require('../')
 const web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'))
 
 Lookup
-  .addressByName(web3, 'ngotchac')
+  .name(web3, 'ngotchac')
   .then((result) => {
     console.log('looked up "ngotchac"', result)
   })

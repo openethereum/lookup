@@ -27,5 +27,5 @@ const badgesOfAddress = (allBadges, address) =>
 
 module.exports = (api, address) => {
   const allBadges = Badges.all(api)
-  badgesOfAddress(allBadges, address)
+  return badgesOfAddress(allBadges, address)
 }
