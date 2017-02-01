@@ -1,15 +1,7 @@
-const {Api} = require('@parity/parity.js')
+const {api} = require('./api')
 
 const registryBytecode = require('./bytecodes/registry')
 const registryAbi = require('../src/contracts/abi/SimpleRegistry.json')
-
-// do the setup
-const transport = new Api.Transport.Http('http://localhost:8888')
-const api = new Api(transport)
-api.transport._connectTimeout = -1
-api.parity.postTransaction = (options) => {
-  return api.eth.sendTransaction(options)
-}
 
 let account = null
 let registry = null
@@ -29,7 +21,7 @@ function deploy (abi, bytecode, parameters) {
         .then(([gasEst, gas]) => {
           options.gas = gas.toFixed(0)
 
-          const _options = contract._encodeOptions(contract.constructors[0], options, values);
+          const _options = contract._encodeOptions(contract.constructors[0], options, values)
           return api.eth.sendTransaction(_options)
         })
         .then((txhash) => {
@@ -87,13 +79,32 @@ function register (name, data) {
     })
 }
 
-function main () {
-  deploy(registryAbi, registryBytecode)
+function deployAndRegister (abi, bytecode, name) {
+  return deploy(abi, bytecode)
     .then((address) => {
-      registry = api.newContract(registryAbi, address).instance
-
-      return register('registry', { 'A': address })
+      return register('name', { 'A': address })
     })
 }
 
-main()
+function deployRegister () {
+  return deploy(registryAbi, registryBytecode)
+    .then((address) => {
+      registry = api.newContract(registryAbi, address).instance
+      return register('registry', { A: address })
+    })
+}
+
+function run () {
+  return deployRegister()
+    .then(() => {
+      return register('ngotchac', { A: '0x634bd930e2bf75325bd2288500f0efa5d46d26fe' })
+    })
+    .then(() => {
+      return registry
+    })
+}
+
+module.exports = {
+  deployAndRegister,
+  run
+}
