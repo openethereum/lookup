@@ -1,0 +1,14 @@
+{
+  "name": "lookup-example",
+  "version": "1.0.0",
+  "description": "Example of using lookup",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "web3": "^0.18.2"
+  }
+}
