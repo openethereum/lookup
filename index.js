@@ -6,46 +6,24 @@ const byName = require('./src/lookups/name')
 
 const init = require('./src/init')
 
-let _api = null
-
 function initialize (api, config) {
-  _api = api
   return init(api, config || {})
 }
 
-module.exports = {
-  init: initialize,
-  byAddress: function (api, address) {
-    if (address === undefined && typeof api === 'string') {
-      if (!_api) {
-        throw new Error('the lookup service is not initialized yet')
-      }
+module.exports = (api, config) => {
+  const p = initialize(api, config)
 
-      return byAddress(_api, api)
+  return {
+    byAddress: function (address) {
+      return p.then(() => byAddress(api, address))
+    },
+
+    byEmail: function (email) {
+      return p.then(() => byEmail(api, email))
+    },
+
+    byName: function (name) {
+      return p.then(() => byName(api, name))
     }
-
-    return byAddress(api, address)
-  },
-  byEmail: function (api, email) {
-    if (email === undefined && typeof api === 'string') {
-      if (!_api) {
-        throw new Error('the lookup service is not initialized yet')
-      }
-
-      return byEmail(_api, api)
-    }
-
-    return byEmail(api, email)
-  },
-  byName: function (api, name) {
-    if (name === undefined && typeof api === 'string') {
-      if (!_api) {
-        throw new Error('the lookup service is not initialized yet')
-      }
-
-      return byName(_api, api)
-    }
-
-    return byName(api, name)
   }
 }
