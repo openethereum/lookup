@@ -5,7 +5,7 @@ const {Api} = require('@parity/parity.js')
 // do the setup
 const transport = new Api.Transport.Http('http://localhost:8545')
 const api = new Api(transport)
-api.transport._connectTimeout = -1;
+api.transport._connectTimeout = -1
 
 const {sha3} = require('../src/util')
 
