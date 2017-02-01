@@ -23,8 +23,8 @@ const badgesOfAddress = (allBadges, address) =>
     badges
     .filter(({hasBadge}) => hasBadge)
     .map(({badge}) => {
-      const cleanBadge = Object.assign({}, badge);
-      delete cleanBadge.contract;
+      const cleanBadge = Object.assign({}, badge)
+      delete cleanBadge.contract
 
       return cleanBadge
     })

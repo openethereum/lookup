@@ -35,8 +35,8 @@ const tokenBalancesOfAddress = (api, allTokens, address) => {
       return tokenBalanceOfAddress(address, token)
         .catch(() => new BigNumber(0)) // in case of an error we assume address has 0
         .then((balance) => {
-          const tok = Object.assign({}, token);
-          delete tok.contract;
+          const tok = Object.assign({}, token)
+          delete tok.contract
 
           return Object.assign({}, tok, {balance})
         })
