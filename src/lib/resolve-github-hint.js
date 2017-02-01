@@ -1,6 +1,6 @@
 'use strict'
 
-const GithubHint = require('./github-hint')
+const GithubHint = require('../contracts/github-hint')
 
 const resolveGitHubHint = (contract, hash) => {
   const data = contract.entries(hash)

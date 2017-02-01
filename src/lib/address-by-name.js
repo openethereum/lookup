@@ -1,7 +1,7 @@
 'use strict'
 
-const Registry = require('./registry')
-const {sha3, zero20} = require('./util')
+const Registry = require('../contracts/registry')
+const {sha3, zero20} = require('../util')
 
 const addressByName = (registry, name) =>
   new Promise((resolve, reject) => {

@@ -1,6 +1,6 @@
 'use strict'
 
-const Registry = require('./registry')
+const Registry = require('../contracts/registry')
 
 const nameOfAddress = (registry, address) =>
   new Promise((resolve, reject) => {

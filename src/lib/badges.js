@@ -1,11 +1,11 @@
 'use strict'
 
-const BadgeReg = require('./badge-reg')
+const BadgeReg = require('../contracts/badge-reg')
 const resolveGitHubHint = require('./resolve-github-hint')
 
-const {zero20, zero32, toAscii} = require('./util')
+const {zero20, zero32, toAscii} = require('../util')
 
-const abi = require('../contracts/certifier.json')
+const abi = require('../contracts/abi/certifier.json')
 
 let instance = null
 

@@ -1,8 +1,8 @@
 'use strict'
 
-const {sha3} = require('./util')
+const {sha3} = require('../util')
 const Registry = require('./registry')
-const abi = require('../contracts/GithubHint.json')
+const abi = require('./abi/GithubHint.json')
 
 let instance = null
 

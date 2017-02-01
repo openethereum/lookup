@@ -1,15 +1,16 @@
 'use strict'
 
-const BadgeReg = require('./badge-reg')
-const abi = require('../contracts/ProofOfEmail.json')
+const {sha3} = require('../util')
+const Registry = require('./registry')
+const abi = require('./abi/TokenReg.json')
 
 let instance = null
 
 module.exports = {
   get: (api) => {
     if (!instance || instance.api !== api) {
-      const badgeReg = BadgeReg.get(api)
-      const address = badgeReg.fromName.call('emailverification')[1]
+      const registry = Registry.get(api)
+      const address = registry.getAddress(sha3('tokenreg'), 'A')
       const contract = api.eth.contract(abi).at(address)
 
       instance = {api, contract}

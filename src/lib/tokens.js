@@ -1,11 +1,11 @@
 'use strict'
 
-const TokenReg = require('./token-reg')
+const TokenReg = require('../contracts/token-reg')
 const resolveGitHubHint = require('./resolve-github-hint')
 
-const {zero32} = require('./util')
+const {zero32} = require('../util')
 
-const abi = require('../contracts/EIP20.json')
+const abi = require('../contracts/abi/EIP20.json')
 
 let instance = null
 

@@ -1,7 +1,7 @@
 'use strict'
 
-const {zero20} = require('./util')
-const ProofOfEmail = require('./proof-of-email')
+const {zero20} = require('../util')
+const ProofOfEmail = require('../contracts/proof-of-email')
 
 const addressByEmailHash = (contract, emailHash) =>
   new Promise((resolve, reject) => {

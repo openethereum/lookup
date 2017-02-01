@@ -1,6 +1,6 @@
 'use strict'
 
-const abi = require('../contracts/SimpleRegistry.json')
+const abi = require('./abi/SimpleRegistry.json')
 const registryAddress = '0x81a4b044831c4f12ba601adb9274516939e9b8a2'
 
 let instance = null
