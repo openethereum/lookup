@@ -6,14 +6,29 @@ const server = TestRPC.server({
   unlocked_accounts: [ 0 ]
 })
 
-server.listen(port, function(err, blockchain) {
-  console.log('[testrpc] listening on port', port)
-  const accounts = blockchain.unlocked_accounts
+function start (cb) {
+  server.listen(port, function (err, blockchain) {
+    if (err) {
+      throw err
+    }
 
-  console.log('[testrpc]', 'unlocked accounts:')
-  Object.keys(accounts).forEach((address) => {
-    console.log(`  => ${address}`)
+    console.log('[testrpc] listening on port', port)
+    const accounts = blockchain.unlocked_accounts
+
+    console.log('[testrpc]', 'unlocked accounts:')
+    Object.keys(accounts).forEach((address) => {
+      console.log(`  => ${address}`)
+    })
+
+    console.log('')
+
+    cb && cb()
   })
+}
 
-  console.log('')
-})
+module.exports = {
+  start,
+  stop: () => {
+    server.close()
+  }
+}
