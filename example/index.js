@@ -1,10 +1,10 @@
 'use strict'
 
-const {Api} = require('@parity/parity.js');
+const {Api} = require('@parity/parity.js')
 
 // do the setup
-const transport = new Api.Transport.Http('http://localhost:8545');
-const api = new Api(transport);
+const transport = new Api.Transport.Http('http://localhost:8545')
+const api = new Api(transport)
 
 const {sha3} = require('../src/util')
 
