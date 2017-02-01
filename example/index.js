@@ -1,14 +1,17 @@
 'use strict'
 
-const Web3 = require('web3')
-const sha3 = require('web3/lib/utils/sha3')
+const {Api} = require('@parity/parity.js');
+
+// do the setup
+const transport = new Api.Transport.Http('http://localhost:8545');
+const api = new Api(transport);
+
+const {sha3} = require('../src/util')
 
 const Lookup = require('../')
 
-const web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'))
-
 Lookup
-  .byName(web3, 'ngotchac')
+  .byName(api, 'ngotchac')
   .then((result) => {
     console.log('=> looked up name "ngotchac":')
     console.log('     ' + JSON.stringify(result, null, 2).split('\n').join('\n      '))
@@ -19,7 +22,7 @@ Lookup
   })
 
 Lookup
-  .byAddress(web3, '0x639ba260535db072a41115c472830846e4e9ad0f')
+  .byAddress(api, '0x639ba260535db072a41115c472830846e4e9ad0f')
   .then((result) => {
     console.log('looked up address "0x639ba260535db072a41115c472830846e4e9ad0f":')
     console.log('     ' + JSON.stringify(result, null, 2).split('\n').join('\n      '))
@@ -30,7 +33,7 @@ Lookup
   })
 
 Lookup
-  .byEmail(web3, '0x' + sha3('ngotchac@gmail.com'))
+  .byEmail(api, sha3('ngotchac@gmail.com'))
   .then((result) => {
     console.log('looked up address "ngotchac@gmail.com":')
     console.log('     ' + JSON.stringify(result, null, 2).split('\n').join('\n      '))

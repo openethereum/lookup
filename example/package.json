@@ -9,6 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "web3": "^0.18.2"
+    "@parity/parity.js": "^0.3.41"
   }
 }
