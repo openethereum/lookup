@@ -5,13 +5,8 @@ const {start, stop} = require('./server')
 start(() => {
   const tape = spawn('tape', ['test/init.js', 'src/**/*.spec.js'])
 
-  tape.stdout.on('data', (data) => {
-    process.stdout.write(data)
-  })
-
-  tape.stderr.on('data', (data) => {
-    process.stderr.write(data)
-  })
+  tape.stdout.pipe(process.stdout)
+  tape.stderr.pipe(process.stderr)
 
   tape.on('close', (code) => {
     stop()
