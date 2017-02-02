@@ -1,8 +1,8 @@
-# [Parity](https://ethcore.io/parity.html) lookup service
+# [Parity](https://ethcore.io/parity.html) lookup
 
-**The service is deployed at `https://id.parity.io/` (mainnet) and `https://id.parity.io:8443/` (testnet).**
+**Look up details about Ethereum accounts by address, name or e-mail.**
 
-Also, check out [lookup-service-ui](https://github.com/ethcore/lookup-service-ui) for a GUI.
+Check out [lookup-service](https://github.com/ethcore/lookup-service) for the web service and [lookup-service-ui](https://github.com/ethcore/lookup-service-ui) for the GUI.
 
 [![Join the chat at https://gitter.im/ethcore/parity][gitter-image]][gitter-url] [![GPLv3][license-image]][license-url]
 
@@ -14,60 +14,55 @@ Also, check out [lookup-service-ui](https://github.com/ethcore/lookup-service-ui
 ## Installation
 
 ```shell
-git clone https://github.com/ethcore/lookup-service.git
-cd lookup-service
-npm install --production
+npm install --save lookup@ethcore/lookup
 ```
 
-1. Create a config file `config/<env>.json`, which partially overrides `config/default.json`.
-2. `export NODE_ENV=<env>; node index.js`
+## Usage
 
-## API
+```js
+const {Api} = require('@parity/parity.js')
 
-You can lookup an address using the e-mail it has been verified with.
+const api = new Api(new Api.Transport.Http('http://localhost:8545'))
+api.transport._connectTimeout = -1
 
-```http
-GET /?email=jannis@ethcore.io
-GET /?emailHash=0xc39c668305a16c70e893541650fffc6504f45c94a1f7f8ebe21dc62f7462f9a9
+const lookup = require('lookup')(api)
+
+lookup
+  .byName('ngotchac')
+  .then(console.log)
 ```
 
-Use [`SimpleRegistry.sol`](https://github.com/ethcore/contracts/blob/c4f40b6/SimpleRegistry.sol) to find an address by name.
-
-```http
-GET /?name=derhuerst
-```
-
-Or use the address directly.
-
-```http
-GET /?address=0x00d189b71e5b42a88aa3e83173d4a6926e665336
-```
-
-The result will look like this.
+You will get a result like this:
 
 ```js
 {
-  "address": "0x00d189b71e5b42a88aa3e83173d4a6926e665336",
-  "name": "derhuerst",
-  "badges": [
+  address: '0x639ba260535db072a41115c472830846e4e9ad0f',
+  name: 'ngotchac',
+  badges: [ {
+    id: 12,
+    address: '0x4A99350b039068fD326a318C599Be2E09E657D4A',
+    name: 'emailverification',
+    title: 'eMail verified',
+    img: 'https://raw.githubusercontent.com/ethcore/dapp-assets/master/certifications/email-verification.svg'
+  } ],
+  tokens: [
     {
-      "id": 0,
-      "address": "0x01e1a37118fe3befd17c426fa962cff2c9099835",
-      "name": "smsverification",
-      "title": "sms verified",
-      "img": "https://raw.githubusercontent.com/ethcore/dapp-assets/1b1beb5/certifications/sms-verification.svg"
-    },
-    // …
-  ],
-  "tokens": [
-    {
-      "TLA": "ETH",
-      "name": "Ether",
-      "base": "1000000000000000000",
-      "img": "https://raw.githubusercontent.com/ethcore/parity/1e6a2cb/js/assets/images/contracts/ethereum-black-64x64.png",
-      "balance": "987.264418979418313684"
-    },
-    // …
+      id: 0,
+      address: '0xAde20230C260f1fd46cD70174dd58363929fEa31',
+      TLA: 'GOT',
+      base: { [String: '1000000'] s: 1, e: 6, c: [ 1000000 ] }, // BigNumber
+      name: 'Gotchacoin',
+      img: 'http://vignette3.wikia.nocookie.net/farmville2/images/2/26/Baby_Caramel_Pygora_Goat.png/revision/latest?cb=20130201193031',
+      balance: '3'
+    }, {
+      TLA: 'ETH',
+      name: 'Ether',
+      base: { [String: '1000000000000000000'] s: 1, e: 18, c: [ 10000 ] },
+      img: 'https://raw.githubusercontent.com/ethcore/parity/1e6a2cb/js/assets/images/contracts/ethereum-black-64x64.png',
+      balance: '12.5245565653765155'
+    }
   ]
 }
 ```
+
+Refer to [the example](example/index.js) for more use cases.
