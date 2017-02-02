@@ -7,7 +7,8 @@
   "scripts": {
     "lint": "standard --verbose | snazzy",
     "test": "npm run lint && node test/run.js | tap-spec",
-    "prepush": "npm run lint"
+    "prepush": "npm run lint",
+    "prepublish": "npm run lint"
   },
   "keywords": [],
   "author": "Ethcore Team <admin@ethcore.io>",
