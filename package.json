@@ -6,9 +6,8 @@
   "main": "index.js",
   "scripts": {
     "lint": "standard --verbose | snazzy",
-    "test": "npm run lint && node test/run.js | tap-spec",
-    "prepush": "npm run lint",
-    "prepublish": "npm run lint"
+    "test": "test-server -s & wait-for-server && node test.js | tap-spec; s=$?;kill %1;exit $s",
+    "prepush": "npm run lint && npm test"
   },
   "keywords": [],
   "author": "Ethcore Team <admin@ethcore.io>",
@@ -22,12 +21,14 @@
   },
   "dependencies": {
     "bignumber.js": "^4.0.0",
-    "js-sha3": "^0.5.7"
+    "js-sha3": "^0.5.7",
+    "lookup-test-tools": "github:ethcore/lookup-test-tools"
   },
   "devDependencies": {
     "@parity/parity.js": "^0.3.44",
     "ethereumjs-testrpc": "^3.0.3",
     "husky": "^0.12.0",
+    "lookup-test-tools": "ethcore/lookup-test-tools",
     "snazzy": "^6.0.0",
     "standard": "^8.6.0",
     "tap-spec": "^4.1.1",
